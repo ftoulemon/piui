@@ -49,6 +49,7 @@ class DemoPiUi(object):
     def page_images(self):
         self.page = self.ui.new_ui_page(title="Images", prev_text="Back", onprevclick=self.main_menu)
         takepic = self.page.add_button("Take Picture", self.takepicbutton)
+        self.capturetext = self.page.add_textbox("")
         self.page.add_element('br')
         for root, _, files in os.walk(self.thumbs_dir):
             for f in files:
@@ -98,9 +99,10 @@ class DemoPiUi(object):
         print "Start"
 
     def takepicbutton(self):
+        self.capturetext.set_text("wait...")
         picname = time.strftime("%Y%m%d_%H%M%S", time.gmtime())
         os.system("raspistill -o " + self.img_dir + "/" + picname + ".jpg")
-        print "click"
+        self.capturetext.set_text("DONE")
 
     def ontoggle(self, what, value):
         self.title.set_text("Toggled " + what + " " + str(value))
