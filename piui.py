@@ -2,6 +2,7 @@ import functools
 import os, os.path
 import random
 import time
+import Image
 from piui import PiUi
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -97,6 +98,8 @@ class DemoPiUi(object):
         print "Start"
 
     def takepicbutton(self):
+        picname = time.strftime("%Y%m%d_%H%M%S", time.gmtime())
+        os.system("raspistill -o " + self.img_dir + "/" + picname + ".jpg")
         print "click"
 
     def ontoggle(self, what, value):
