@@ -3,6 +3,9 @@ piui
 
 Add a UI to your standalone Raspberry Pi project using your Android or iOS phone
 
+Modified version of the [original project](https://github.com/dps/piui).
+Here, the goal is to control the raspberry pi camera module.
+
 Demo
 ====
 
@@ -13,41 +16,12 @@ Demo
 
 Install PiUi
 ============
-```
-pip install piui
-```
 
-Setup Instructions (to prepare your Raspberry Pi)
-=================================================
-
-The easy way (using a pre-prepared SD card image)
--------------------------------------------------
-
-Download the `piui_plus_examples.zip` file from [github.com/dps/piui-sdcards](https://github.com/dps/piui-sdcards/blob/master/piui_plus_examples.zip?raw=true).  Unzip it and you'll find a 4Gb sd card image named `piui_plus_examples.img`.  Write it to an SD card by following the [usual Raspberry Pi instructions](http://elinux.org/RPi_Easy_SD_Card_Setup).  At present, this image is based on Occidentalis 0.2.
-
-Assuming you have the same wifi adapter I do, this will work out of the box.  If not, read the [Pi-Point](http://www.pi-point.co.uk/) docs to configure for your own hardware.
-
-On first boot, you can sync the latest piui source with:
-```
-cd piui
-git pull origin
-```
-and start the demo app with:
-```
-python piui_demo.py
-```
 
 The do-it-yourself way
 ----------------------
 
-Start with the latest release of [Raspbian](http://www.raspberrypi.org/downloads) or (better as it's ready for hardware projects) [Occidentalis](http://learn.adafruit.com/adafruit-raspberry-pi-educational-linux-distro/occidentalis-v0-dot-2).
-
-Follow the [Pi-Point documentation](http://www.pi-point.co.uk/) to turn your Pi into a wifi access point.  Note that if you use the [Adafruit wifi adapter](https://www.adafruit.com/products/814), these instructions do not work in full as the `nl80211` driver does not support that device (which uses a Realtek chipset).  [This blog post](http://blog.sip2serve.com/post/38010690418/raspberry-pi-access-point-using-rtl8192cu) explains how to make it work - thanks Paul!
-
-Add an entry to `/etc/hosts` mapping the DNS name `piui` to the address you configured for the Pi in the step above.  Assuming it's `192.168.1.1`, then you should add the following to `/etc/hosts`
-```
-192.168.1.1     piui
-```
+Start with the latest release of [Raspbian](http://www.raspberrypi.org/downloads).
 
 Install `nginx` - nginx is an HTTP server and reverse proxy, we use it to multiplex requests to your app and the `piui-supervisor`.
 
@@ -78,7 +52,13 @@ cd piui
 python piui_demo.py
 ```
 
-Connect your phone to the wifi AP and navigate to 'http://piui/'.
+or my personal app:
+```
+cd piui
+python piui.py
+```
+
+Connect your phone to the wifi AP and navigate to 'http://<raspberry pi IP>/'.
 
 
 Known limitations / work in progress
