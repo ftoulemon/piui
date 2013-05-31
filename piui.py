@@ -102,6 +102,9 @@ class DemoPiUi(object):
         self.capturetext.set_text("wait...")
         picname = time.strftime("%Y%m%d_%H%M%S", time.gmtime())
         os.system("raspistill -o " + self.img_dir + "/" + picname + ".jpg")
+        newPic = Image.open(self.img_dir + "/" + picname + ".jpg")
+        newPreview = newPic.resize((280, 200), Image.NEAREST)
+        newPreview.save(self.thumbs_dir + "/" + picname + ".jpg")
         self.capturetext.set_text("DONE")
 
     def ontoggle(self, what, value):
