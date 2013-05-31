@@ -1,5 +1,5 @@
 import functools
-import os
+import os, os.path
 import random
 import time
 from piui import PiUi
@@ -13,7 +13,8 @@ class DemoPiUi(object):
         self.title = None
         self.txt = None
         self.img = None
-        self.ui = PiUi(img_dir=os.path.join(current_dir, 'imgs'))
+        self.img_dir=os.path.join(current_dir, 'imgs')
+        self.ui = PiUi(self.img_dir)
         self.src = "sunset.png"
 
     def page_static(self):
@@ -45,9 +46,11 @@ class DemoPiUi(object):
 
     def page_images(self):
         self.page = self.ui.new_ui_page(title="Images", prev_text="Back", onprevclick=self.main_menu)
-        self.img = self.page.add_image("sunset.png")
+        takepic = self.page.add_button("Take Picture", self.takepicbutton)
         self.page.add_element('br')
-        button = self.page.add_button("Change The Picture", self.onpicclick)
+        for root, _, files in os.walk(self.img_dir):
+            for f in files:
+                self.page.add_image(f)
 
     def page_toggles(self):
         self.page = self.ui.new_ui_page(title="Toggles", prev_text="Back", onprevclick=self.main_menu)
@@ -92,13 +95,8 @@ class DemoPiUi(object):
         self.title.set_text("Hello " + self.txt.get_text())
         print "Start"
 
-    def onpicclick(self):
-        if self.src == "sunset.png":
-          self.img.set_src("sunset2.png")
-          self.src = "sunset2.png"
-        else:
-          self.img.set_src("sunset.png")
-          self.src = "sunset.png"
+    def takepicbutton(self):
+        print "click"
 
     def ontoggle(self, what, value):
         self.title.set_text("Toggled " + what + " " + str(value))
