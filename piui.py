@@ -14,7 +14,8 @@ class DemoPiUi(object):
         self.txt = None
         self.img = None
         self.img_dir=os.path.join(current_dir, 'imgs')
-        self.ui = PiUi(self.img_dir)
+        self.thumbs_dir=os.path.join(current_dir, 'thumbs')
+        self.ui = PiUi(self.thumbs_dir)
         self.src = "sunset.png"
 
     def page_static(self):
@@ -48,7 +49,7 @@ class DemoPiUi(object):
         self.page = self.ui.new_ui_page(title="Images", prev_text="Back", onprevclick=self.main_menu)
         takepic = self.page.add_button("Take Picture", self.takepicbutton)
         self.page.add_element('br')
-        for root, _, files in os.walk(self.img_dir):
+        for root, _, files in os.walk(self.thumbs_dir):
             for f in files:
                 self.page.add_image(f)
 
